@@ -1,1 +1,28 @@
+--Get All Makes that have manufactured more than 12000 Vehicles in years 1950 to 2000
+
+
+SELECT        Makes.Make, Count(*) NumberOfVehicles
+FROM            VehicleDetails INNER JOIN
+                         Makes ON Makes.MakeID = VehicleDetails.MakeID
+where (VehicleDetails.Year between 1950 and 2000)
+group by Make
+having Count(*) > 12000
+Order by NumberOfVehicles desc
+
+
+--Without Having
+
+select * from 
+(
+ 
+    SELECT        Makes.Make, Count(*) NumberOfVehicles
+    FROM            VehicleDetails INNER JOIN
+                         Makes ON Makes.MakeID = VehicleDetails.MakeID
+    where (VehicleDetails.Year between 1950 and 2000)
+    group by Make
+ 
+) R1
+where NumberOfVehicles > 12000
+
+
 
