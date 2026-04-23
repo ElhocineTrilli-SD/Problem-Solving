@@ -178,6 +178,108 @@ FROM            VehicleDetails INNER JOIN
                          Makes ON VehicleDetails.MakeID = Makes.MakeID
 
 Group by DriveTypeName , Make
+
+
+
+
+--Problem 20: Get all Vehicles that number of doors is not specified
+
+select * from VehicleDetails
+where NumDoors is Null
+
+--Problem 21: Get Total Vehicles that number of doors is not specified
+select count (*) as  TotalVehicles  from VehicleDetails
+where NumDoors is Null
+
+--Problem 22: Get percentage of vehicles that has no doors specified
+
+select 
+
+(
+   cast((select count (*) as  TotalVehicleswithnoDoor  from VehicleDetails
+   where NumDoors is Null) as float)
+
+   /
+   cast((select count (*) as  TotalVehicles  from VehicleDetails) as float)
+
+) as  PercOfNoSpecifiedDoors
+
+--Problem 23: Get MakeID , Make, SubModelName for all vehicles that have SubModelName 'Elite'
+
+
+SELECT       distinct VehicleDetails.MakeID, Makes.Make,SubModels.SubModelName
+FROM            VehicleDetails INNER JOIN
+                         SubModels ON VehicleDetails.SubModelID = SubModels.SubModelID INNER JOIN
+                         Makes ON VehicleDetails.MakeID = Makes.MakeID
+where 	SubModels.SubModelName = 	'Elite'				 
+
+--Problem 24: Get all vehicles that have Engines > 3 Liters and have only 2 doors
+
+select *  from VehicleDetails
+where Engine_Liter_Display>3 and NumDoors = 2
+
+--Problem 25: Get make and vehicles that the engine contains 'OHV' and have Cylinders = 4
+
+ SELECT        Makes.Make, VehicleDetails.*
+FROM            VehicleDetails INNER JOIN
+                         Makes ON VehicleDetails.MakeID = Makes.MakeID
+where (Engine like '%OHV%') and (Engine_Cylinders = 4)
+
+--Problem 26: Get all vehicles that their body is 'Sport Utility' and Year > 2020
+
+SELECT        Bodies.BodyName, VehicleDetails.*
+FROM            VehicleDetails INNER JOIN
+                         Bodies ON VehicleDetails.BodyID = Bodies.BodyID
+Where BodyName='Sport Utility' and Year > 2020
+
+--Problem 27: Get all vehicles that their Body is 'Coupe' or 'Hatchback' or 'Sedan'
+
+SELECT        Bodies.BodyName, VehicleDetails.*
+FROM            VehicleDetails INNER JOIN
+                         Bodies ON VehicleDetails.BodyID = Bodies.BodyID
+Where BodyName in('Coupe' , 'Hatchback' , 'Sedan')
+
+
+--Problem 28: Get all vehicles that their body is 'Coupe' or 'Hatchback' or 'Sedan' 
+--and manufactured in year 2008 or 2020 or 2021
+
+
+SELECT        Bodies.BodyName, VehicleDetails.*
+FROM            VehicleDetails INNER JOIN
+                         Bodies ON VehicleDetails.BodyID = Bodies.BodyID
+Where BodyName in('Coupe' , 'Hatchback' , 'Sedan') and Year in(2008,2020,2021)
+
+--Problem 29: Return found=1 if there is any vehicle made in year 1950
+
+select Found=1
+where 
+exists
+(
+       select  top 1  * from VehicleDetails
+       where Year = 1950
+)
+
+--Problem 30: Get all Vehicle_Display_Name, 
+--NumDoors and add extra column to describe number of doors by words, and if door is null display 'Not Set'
+
+SELECT    Vehicle_Display_Name,  NumDoors  ,
+case 
+
+when NumDoors = 0     then  'Zero Doors'
+when NumDoors = 2     then  'Two Doors'
+when NumDoors = 3     then  'Three Doors'
+when NumDoors = 4     then  'Four Doors'
+when NumDoors = 5     then  'Five Doors'
+when NumDoors = 6     then  'six Doors'
+when NumDoors = 8     then  'Eight Doors'
+when NumDoors is null     then  ' Not Set'
+else 'Unknoun'
+end  as DoorDescription
+ FROM   VehicleDetails
+
+
+
+
 Order by Make , TotalVehicles desc
 
 --Problem 19: Get total vehicles per DriveTypeName Per Make then filter only results with total > 10,000
