@@ -26,11 +26,17 @@ SELECT
 FROM Employees
 WHERE DepartmentID = @DepartmentID;
 
+-- Get department name
+SELECT
+    @DepartmentName = DepartmentName
+FROM Departments
+WHERE DepartmentID = @DepartmentID;
 
 PRINT '==========================';
 PRINT 'Department Salary Report';
 PRINT '==========================';
 
+PRINT 'Department Name : ' + @DepartmentName;
 PRINT 'Total Employees : ' + CAST(@TotalEmployees AS NVARCHAR);
 PRINT 'Total Salary    : ' + CAST(@TotalSalary AS NVARCHAR);
 PRINT 'Average Salary  : ' + CAST(@AverageSalary AS NVARCHAR);
