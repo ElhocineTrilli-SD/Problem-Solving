@@ -14,3 +14,25 @@ DECLARE @LowestSalary MONEY;
 
 -- Assign values to variables
 SET @DepartmentID = 5;
+
+
+-- Calculate department statistics
+SELECT 
+    @TotalEmployees = COUNT(*),
+    @TotalSalary = SUM(Salary),
+    @AverageSalary = AVG(Salary),
+    @HighestSalary = MAX(Salary),
+    @LowestSalary = MIN(Salary)
+FROM Employees
+WHERE DepartmentID = @DepartmentID;
+
+
+PRINT '==========================';
+PRINT 'Department Salary Report';
+PRINT '==========================';
+
+PRINT 'Total Employees : ' + CAST(@TotalEmployees AS NVARCHAR);
+PRINT 'Total Salary    : ' + CAST(@TotalSalary AS NVARCHAR);
+PRINT 'Average Salary  : ' + CAST(@AverageSalary AS NVARCHAR);
+PRINT 'Highest Salary  : ' + CAST(@HighestSalary AS NVARCHAR);
+PRINT 'Lowest Salary   : ' + CAST(@LowestSalary AS NVARCHAR);
