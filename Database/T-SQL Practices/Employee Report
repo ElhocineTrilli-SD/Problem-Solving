@@ -17,4 +17,6 @@ select
 @Salary        = Salary,
 @HirDate       = HireDate
 From Employees
+inner join Departments d 
+on Employees.DepartmentID = d.DepartmentID
 WHERE EmployeeID = @EmployeeID;
