@@ -1,0 +1,44 @@
+--===========================================
+-- Department Hiring Report
+--===========================================
+
+-- Declare variables
+DECLARE @DepatmentID INT;
+DECLARE @StartDate DATE;
+DECLARE @EndDate DATE;
+DECLARE @TotalEmployees INT;
+DECLARE @DepatmentName NVARCHAR(30);
+
+-- Assign values to variables
+SET @DepatmentID = 3;
+SET @StartDate = '2023-01-01';
+SET @EndDate = '2023-12-31';
+
+-- Get the department name
+SELECT @DepatmentName = Name
+FROM Employees
+WHERE DepartmentID = @DepatmentID;
+
+-- Count the number of employees hired
+-- in the specified department and date range
+SELECT @TotalEmployees = COUNT(*)
+FROM Employees
+WHERE DepartmentID = @DepatmentID
+  AND HireDate BETWEEN @StartDate AND @EndDate;
+
+--===========================================
+-- Print Report
+--===========================================
+
+PRINT 'Department Report';
+PRINT 'Department Name : ' + @DepatmentName;
+
+PRINT 'Department Period : From '
+    + CAST(@StartDate AS NVARCHAR)
+    + ' To '
+    + CAST(@EndDate AS NVARCHAR);
+
+PRINT 'Total Employees Hired in '
+    + CAST(YEAR(@StartDate) AS NVARCHAR)
+    + ' : '
+    + CAST(@TotalEmployees AS NVARCHAR);
