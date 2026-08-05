@@ -1,0 +1,17 @@
+--===========================================
+-- Employee Report
+--===========================================
+
+-- Declare variables
+DECLARE @EmployeeID INT;
+DECLARE @FullName NVARCHAR(30);
+DECLARE @DepartmentName NVARCHAR(30);
+DECLARE @Salary INT;
+DECLARE @HireDate DATE;
+
+-- Assign values to variables
+SET @EmployeeID = 5;
+SET @FullName = (SELECT FullName FROM Employees WHERE EmployeeID = @EmployeeID);
+SET @DepartmentName = (SELECT DepartmentName FROM Employees WHERE EmployeeID = @EmployeeID);
+SET @Salary = (SELECT Salary FROM Employees WHERE EmployeeID = @EmployeeID);
+SET @HireDate = (SELECT HireDate FROM Employees WHERE EmployeeID = @EmployeeID);
