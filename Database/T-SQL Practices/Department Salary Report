@@ -1,0 +1,16 @@
+--===========================================
+-- Department Salary Report
+--===========================================
+
+-- Declare variables
+DECLARE @DepartmentID INT;
+DECLARE @DepartmentName NVARCHAR(30);
+
+DECLARE @TotalEmployees INT;
+DECLARE @TotalSalary MONEY;
+DECLARE @AverageSalary MONEY;
+DECLARE @HighestSalary MONEY;
+DECLARE @LowestSalary MONEY;
+
+-- Assign values to variables
+SET @DepartmentID = 5;
