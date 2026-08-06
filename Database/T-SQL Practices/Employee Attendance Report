@@ -1,0 +1,59 @@
+--===========================================
+-- Employee Attendance Report
+--===========================================
+
+-- Declare variables
+DECLARE @ReportMonth INT;
+DECLARE @ReportYear INT;
+
+DECLARE @TotalDays INT;
+DECLARE @EmoloyeeID int;
+DECLARE @AbsentDays int;
+DECLARE @PresentDays int;
+DECLARE @LeaveDays  int;
+
+-- Assign values to variables
+SET @ReportMonth = 1;
+SET @ReportYear = 2023;
+set @EmoloyeeID = 5;
+
+-- Calculate Total days in month
+SET @TotalDays = DAY(EOMONTH(DATEFROMPARTS(@ReportYear, @ReportMonth, 1)));
+
+-- Calculate Absent, Present, and Leave days for the employee
+SELECT
+    @AbsentDays = COUNT(*)
+FROM EmployeeAttendance
+WHERE EmployeeID = @EmoloyeeID
+    AND month(AttendanceDate) = @ReportMonth
+    AND year(AttendanceDate) = @ReportYear
+    AND Status = 'Absent';
+
+SELECT
+    @PresentDays = COUNT(*)
+FROM EmployeeAttendance
+WHERE EmployeeID = @EmoloyeeID
+    AND month(AttendanceDate) = @ReportMonth
+    AND year(AttendanceDate) = @ReportYear
+    AND Status = 'Present';
+
+SELECT
+    @LeaveDays = COUNT(*)
+FROM EmployeeAttendance
+WHERE EmployeeID = @EmoloyeeID
+    AND month(AttendanceDate) = @ReportMonth
+    AND year(AttendanceDate) = @ReportYear
+    AND Status = 'Leave';
+
+
+PRINT '==========================';
+PRINT 'Employee Attendance Report';
+PRINT '==========================';
+
+PRINT 'Employee ID : ' + CAST(@EmoloyeeID AS NVARCHAR);
+PRINT 'Report Month : ' + CAST(@ReportMonth AS NVARCHAR);
+PRINT 'Report Year : ' + CAST(@ReportYear AS NVARCHAR);
+PRINT 'Total Days : ' + CAST(@TotalDays AS NVARCHAR);
+PRINT 'Absent Days : ' + CAST(@AbsentDays AS NVARCHAR);
+PRINT 'Present Days : ' + CAST(@PresentDays AS NVARCHAR);
+PRINT 'Leave Days : ' + CAST(@LeaveDays AS NVARCHAR);
