@@ -20,3 +20,13 @@ From Employees
 inner join Departments d 
 on Employees.DepartmentID = d.DepartmentID
 WHERE EmployeeID = @EmployeeID;
+
+PRINT '==========================';
+PRINT 'Employee Report';
+PRINT '==========================';
+
+PRINT 'Employee ID   : ' + CAST(@EmployeeID AS NVARCHAR);
+PRINT 'Employee Name : ' + @FullName;
+PRINT 'Department    : ' + @DepartmentName;
+PRINT 'Salary        : ' + CAST(@Salary AS NVARCHAR);
+PRINT 'Hire Date     : ' + CAST(@HireDate AS NVARCHAR);
