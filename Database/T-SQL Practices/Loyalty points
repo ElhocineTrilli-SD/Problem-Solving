@@ -1,0 +1,34 @@
+--===========================================
+-- Loyalty points
+--===========================================
+
+-- Declare variables
+DECLARE @CustomerID INT;
+DECLARE @TotalSpand decimal(10,2);
+DECLARE @PointsEarned int;
+DECLARE @CurrentYear int = Year(Getdate());
+
+-- Assign values to variables
+set @CustomerID = 1;
+
+-- Calculate Total days in month
+select @TotalSpand =ISNULL(SUM(Amount), 0)
+From Purchases 
+WHERE CustomerID = @CustomerID
+      AND Year(PurchaseDate) = @CurrentYear;
+    
+set @PointsEarned = cast(@TotalSpand / 10 as int);
+
+update Customers
+set LoyaltyPoints = LoyaltyPoints + @PointsEarned
+where CustomerID = @CustomerID ;
+
+
+
+PRINT '==========================';
+PRINT 'Loyalty Points Report';
+PRINT '==========================';
+
+PRINT 'Loyalty Points updated for Customer ID : ' + CAST(@CustomerID AS NVARCHAR);
+PRINT 'Total Amount Spent in : ' + CAST(@CurrentYear AS NVARCHAR) + ' $ ' + CAST(@TotalSpand AS NVARCHAR);
+PRINT 'Loyalty Points Earned : ' + CAST(@PointsEarned AS NVARCHAR);
